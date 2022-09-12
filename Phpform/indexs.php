@@ -34,15 +34,14 @@
         $Email = $_POST['firstName'];
         $Password = $_POST['password'];
 
-        
-echo "First-Name : $FirstName";
-echo "<br>";
-echo "Last-Name : $LastName";
-echo "<br>";
-echo "Email: $Email";
-echo "<br>";
-echo "Password: $Password";
+        //db connect
+        $conn = new mysqli("localhost:3307","root","", "user");
+        if($conn->connect_error){
+            die("$conn->Connect_error");
+        }
+        echo "success";
     }
+    
 
 
     // echo "First-Name : $FirstName";
