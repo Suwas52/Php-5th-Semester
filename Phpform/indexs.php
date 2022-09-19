@@ -8,15 +8,11 @@
 </head>
 <body>
     <form action="<?php echo  $_SERVER['PHP_SELF']  ?>" method="post">
-        <label >First-Name: </label>
-        <input type="text" name="firstName" placeholder="Enter Your First Name" ><br><br>
-        <label >Last-Name: </label>
-        <input type="text" name="lastName" placeholder="ENter Your last Name"><br><br>
         <label >Email: </label>
         <input type="email" name="email" placeholder="ENter Your Email"><br><br>
         <label >Password: </label>
         <input type="password" name="password" placeholder="ENter Your Password"><br><br>
-        <input type="submit" name="submit" value="Submit">
+        <input type="submit" name="submit" value="Login">
 
     </form>
 
@@ -29,20 +25,50 @@
         print_r($_POST);
         echo "</pre>";
         
-        $FirstName = $_POST['firstName'];
-        $LastName = $_POST['firstName'];
-        $Email = $_POST['firstName'];
-        $Password = $_POST['password'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
         //db connect
         $conn = new mysqli("localhost:3307","root","", "user");
+        //database name 
+
         if($conn->connect_error){
             die("$conn->Connect_error");
         }
-        echo "success";
-    }
-    
 
+        //start login process
+        echo "success";
+
+        //query         
+        $sql = "SELECT * FROM users WHERE email = '$email' and password ='$password' ";
+
+        //connection query
+        $result = $conn-> query($sql); 
+
+        if($result->num_rows > 0 ){
+            
+       echo "<pre>";
+       print_r($result);
+       echo "</pre>";
+
+       $row = $result ->fetch_assoc();
+       echo "<pre>";
+       print_r($row);
+       echo "</pre>";
+
+       $db_email = $row["email"];
+       $db_password = $row["password"];
+
+       if($db_email === $email && $db_password=== $password){
+           echo "Login Successful";
+       }
+       else {
+           echo "Complete the form";
+       }
+        }
+
+    
+    }
 
     // echo "First-Name : $FirstName";
     // echo "<br>";
